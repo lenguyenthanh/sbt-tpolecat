@@ -76,34 +76,42 @@ object TpolecatPlugin extends AutoPlugin {
       "The environment variable to use to enable the sbt-tpolecat release mode."
     )
 
+    @transient
     val tpolecatVerboseModeOptions = settingKey[Set[ScalacOption]](
       "The set of scalac options that will be applied by the sbt-tpolecat plugin in the verbose mode."
     )
 
+    @transient
     val tpolecatDevModeOptions = settingKey[Set[ScalacOption]](
       "The set of scalac options that will be applied by the sbt-tpolecat plugin in the development mode."
     )
 
+    @transient
     val tpolecatCiModeOptions = settingKey[Set[ScalacOption]](
       "The set of scalac options that will be applied by the sbt-tpolecat plugin in the continuous integration mode."
     )
 
+    @transient
     val tpolecatReleaseModeOptions = settingKey[Set[ScalacOption]](
       "The set of scalac options that will be applied by the sbt-tpolecat plugin in the release mode."
     )
 
+    @transient
     val tpolecatScalacOptions = settingKey[Set[ScalacOption]](
       "The set of scalac options that will be applied by the sbt-tpolecat plugin."
     )
 
+    @transient
     val tpolecatExcludeOptions = settingKey[Set[ScalacOption]](
       "The set of scalac options that will be excluded."
     )
 
+    @transient
     val tpolecatEffectiveScalacOptions = settingKey[Set[ScalacOption]](
       "The set of scalac options that will effectively be applied by the sbt-tpolecat. For internal use only."
     ).withRank(sbt.KeyRanks.Invisible)
 
+    @transient
     val tpolecatManagedScalacOptions = settingKey[Set[ScalacOption]](
       "The set of scalac options that sbt-tpolecat owns and manages. Defaults to anything it ever adds in any scope delegation chain."
     ).withRank(sbt.KeyRanks.DSetting)
@@ -129,7 +137,7 @@ object TpolecatPlugin extends AutoPlugin {
         "set every tpolecatOptionsMode := _root_.org.typelevel.sbt.tpolecat.ReleaseMode"
       )
 
-  override def buildSettings: Seq[Setting[?]] = Seq(
+  override def buildSettings: Seq[Setting[_]] = Seq(
     tpolecatDefaultOptionsMode := CiMode,
     tpolecatVerboseModeEnvVar  := "SBT_TPOLECAT_VERBOSE",
     tpolecatDevModeEnvVar      := "SBT_TPOLECAT_DEV",
@@ -176,7 +184,7 @@ object TpolecatPlugin extends AutoPlugin {
     }
   }
 
-  override def projectSettings: Seq[Setting[?]] = Seq(
+  override def projectSettings: Seq[Setting[_]] = Seq(
     Def.derive(
       scalacOptions := {
         val prevOptions      = scalacOptions.value.toList
@@ -222,7 +230,7 @@ object TpolecatPlugin extends AutoPlugin {
     Test / console / tpolecatExcludeOptions ++= ScalacOptions.defaultConsoleExclude
   )
 
-  override def globalSettings: Seq[Def.Setting[?]] = Seq(
+  override def globalSettings: Seq[Def.Setting[_]] = Seq(
     tpolecatManagedScalacOptions := Set.empty,
     tpolecatExcludeOptions       := Set.empty
   )
